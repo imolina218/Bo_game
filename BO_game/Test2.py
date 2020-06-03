@@ -1,3 +1,17 @@
+import pygame, sys, os
+
+width, height = 680, 680
+window = pygame.display.set_mode((width, height))
+pygame.display.set_caption("Bo game")
+
+# Load images
+frame_1 = pygame.transform.scale(pygame.image.load(os.path.join("assets", "background-black.png")),
+                                         (width, height))
+frame_2 = pygame.transform.scale(pygame.image.load(os.path.join("assets", "Inkedbackground-black_LI.jpg")),
+                                         (width, height))
+frame_3 = pygame.transform.scale(pygame.image.load(os.path.join("assets", "Inkedbackground-back_L")),
+                                         (width, height))
+
 # Level 1
 level_1 = ["A little girl goes to the store and buys one dozen eggs. As she is going home, all but three break. "
            "How many eggs are left unbroken?...", "If two’s company, and three’s a crowd, what are four and five?...",
@@ -46,26 +60,28 @@ game = True
 
 while game:
     cave = 1
-    challenge = 1
+    challenge = 0
     lives = 8
-    for j in range(10):
-        for i in range(1):
-            riddle = select_riddle(cave, challenge)
-            answer = select_answer(cave, challenge)
-            print(riddle)
-            user_answer = input("Enter your answer: ")
-            if user_answer == answer:
-                print("Correct!!")
-                if challenge == 3:
-                    challenge += 1
-                else:
-                    cave += 1
-                    challenge = 0
-                if challenge and cave == 3:
-                    print("You Win the game.")
+    run = True
+    user_name = ''
+
+    while run:
+        riddle = select_riddle(cave, challenge)
+        answer = select_answer(cave, challenge)
+        print(riddle)
+        user_answer = input("Enter your answer: ")
+        if user_answer in answer:
+            print("Correct!!")
+            if challenge == 2:
+                cave += 1
+                challenge = 0
             else:
-                lives -= 1
-    break
+                challenge += 1
+            if challenge == 3 and cave == 3:
+                print("You Win the game.")
+        else:
+            lives -= 1
+
 
 
 
